@@ -31,8 +31,8 @@ WORKDIR /root/
 # Copy the binary built in the previous stage
 COPY --from=builder /app/main .
 
-# Expose the port your WebSocket server listens on (e.g., 8080)
-EXPOSE 8080
+# Expose the port your WebSocket server listens on (e.g., 8180)
+EXPOSE 8180
 
 # Run the Go app
 CMD ["./main"]

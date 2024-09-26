@@ -120,7 +120,7 @@ func main() {
 		}
 	}(s)
 
-	err := http.ListenAndServe(":8080", &s.mux)
+	err := http.ListenAndServe(":8180", &s.mux)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
