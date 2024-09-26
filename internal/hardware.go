@@ -30,8 +30,10 @@ func GetSystemInfo() (string, error) {
 	html = html + "\tOperating System:" + runtimeOS + "\n"
 	html = html + "\tPlatform:" + hostStat.Platform + "\n"
 	html = html + "\tHostname:" + hostStat.Hostname + "\n"
-	html = html + "\tNumber of processes running:" + strconv.FormatUint(hostStat.Procs, 10) + "\n"
+	html = html + "\tNumber of processes running:" + strconv.FormatUint(hostStat.Procs, 10) + "\n\n"
 	html = html + "\tTotal memory:" + strconv.FormatUint(vmStat.Total/mbDiv, 10) + " MB" + "\n"
+	html = html + "\tUsed memory:" + strconv.FormatUint(vmStat.Used/mbDiv, 10) + " MB" + "\n"
+	html = html + "\tAvailable memory:" + strconv.FormatUint(vmStat.Available/mbDiv, 10) + " MB" + "\n"
 	html = html + "\tFree memory:" + strconv.FormatUint(vmStat.Free/mbDiv, 10) + " MB" + "\n"
 	html = html + "\tPercentage used memory:" + strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64) + "%" + "\n"
 
