@@ -26,16 +26,14 @@ func GetSystemInfo() (string, error) {
 		return "", err
 	}
 
-	html := "<div class='system-data'><table class='table table-striped table-hover table-sm'><tbody>"
-	html = html + "<tr><td>Operating System:</td> <td><i class='fa fa-brands fa-linux'></i> " + runtimeOS + "</td></tr>"
-	html = html + "<tr><td>Platform:</td><td> <i class='fa fa-brands fa-fedora'></i> " + hostStat.Platform + "</td></tr>"
-	html = html + "<tr><td>Hostname:</td><td>" + hostStat.Hostname + "</td></tr>"
-	html = html + "<tr><td>Number of processes running:</td><td>" + strconv.FormatUint(hostStat.Procs, 10) + "</td></tr>"
-	html = html + "<tr><td>Total memory:</td><td>" + strconv.FormatUint(vmStat.Total/mbDiv, 10) + " MB</td></tr>"
-	html = html + "<tr><td>Free memory:</td><td>" + strconv.FormatUint(vmStat.Free/mbDiv, 10) + " MB</td></tr>"
-	html = html + "<tr><td>Percentage used memory:</td><td>" + strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64) + "%</td></tr></tbody></table>"
-
-	html = html + "</div>"
+	html := "\n"
+	html = html + "\tOperating System:" + runtimeOS + "\n"
+	html = html + "\tPlatform:" + hostStat.Platform + "\n"
+	html = html + "\tHostname:" + hostStat.Hostname + "\n"
+	html = html + "\tNumber of processes running:" + strconv.FormatUint(hostStat.Procs, 10) + "\n"
+	html = html + "\tTotal memory:" + strconv.FormatUint(vmStat.Total/mbDiv, 10) + " MB" + "\n"
+	html = html + "\tFree memory:" + strconv.FormatUint(vmStat.Free/mbDiv, 10) + " MB" + "\n"
+	html = html + "\tPercentage used memory:" + strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64) + "%" + "\n"
 
 	return html, nil
 }
@@ -46,11 +44,11 @@ func GetDiskInfo() (string, error) {
 		return "", err
 	}
 
-	html := "<div class='disk-data'><table class='table table-striped table-hover table-sm'><tbody>"
-	html = html + "<tr><td>Total disk space:</td><td>" + strconv.FormatUint(diskStat.Total/gbDiv, 10) + " GB</td></tr>"
-	html = html + "<tr><td>Used disk space:</td><td>" + strconv.FormatUint(diskStat.Used/gbDiv, 10) + " GB</td></tr>"
-	html = html + "<tr><td>Free disk space:</td><td>" + strconv.FormatUint(diskStat.Free/gbDiv, 10) + " GB</td></tr>"
-	html = html + "<tr><td>Percentage disk space usage:</td><td>" + strconv.FormatFloat(diskStat.UsedPercent, 'f', 2, 64) + "%</td></tr>"
+	html := "\n"
+	html = html + "\tTotal disk space:" + strconv.FormatUint(diskStat.Total/gbDiv, 10) + " GB" + "\n"
+	html = html + "\tUsed disk space:" + strconv.FormatUint(diskStat.Used/gbDiv, 10) + " GB" + "\n"
+	html = html + "\tFree disk space:" + strconv.FormatUint(diskStat.Free/gbDiv, 10) + " GB" + "\n"
+	html = html + "\tPercentage disk space usage:" + strconv.FormatFloat(diskStat.UsedPercent, 'f', 2, 64) + "%" + "\n"
 	return html, nil
 }
 
@@ -64,25 +62,24 @@ func GetCpuInfo() (string, error) {
 		return "", err
 	}
 
-	html := "<div class='cpu-data'><table class='table table-striped table-hover table-sm'><tbody>"
+	html := "\n"
 
 	if len(cpuStat) != 0 {
-		html = html + "<tr><td>Model Name:</td><td>" + cpuStat[0].ModelName + "</td></tr>"
-		html = html + "<tr><td>Family:</td><td>" + cpuStat[0].Family + "</td></tr>"
-		html = html + "<tr><td>Speed:</td><td>" + strconv.FormatFloat(cpuStat[0].Mhz, 'f', 2, 64) + " MHz</td></tr>"
+		html = html + "\tModel Name:" + cpuStat[0].ModelName + "\n"
+		html = html + "\tFamily:" + cpuStat[0].Family + "\n"
+		html = html + "\tSpeed:" + strconv.FormatFloat(cpuStat[0].Mhz, 'f', 2, 64) + " MHz" + "\n"
 	}
 
 	firstCpus := percentage[:len(percentage)/2]
 	secondCpus := percentage[len(percentage)/2:]
 
-	html = html + "<tr><td>Cores: </td><td><div class='row mb-4'><div class='col-md-6'><table class='table table-sm'><tbody>"
+	html = html + "Cores: \n"
 	for idx, cpupercent := range firstCpus {
-		html = html + "<tr><td>CPU [" + strconv.Itoa(idx) + "]: " + strconv.FormatFloat(cpupercent, 'f', 2, 64) + "%</td></tr>"
+		html = html + "\tCPU [" + strconv.Itoa(idx) + "]: " + strconv.FormatFloat(cpupercent, 'f', 2, 64) + "%" + "\n"
 	}
-	html = html + "</tbody></table></div><div class='col-md-6'><table class='table table-sm'><tbody>"
+	html = html + ""
 	for idx, cpupercent := range secondCpus {
-		html = html + "<tr><td>CPU [" + strconv.Itoa(idx+8) + "]: " + strconv.FormatFloat(cpupercent, 'f', 2, 64) + "%</td></tr>"
+		html = html + "\tCPU [" + strconv.Itoa(idx+8) + "]: " + strconv.FormatFloat(cpupercent, 'f', 2, 64) + "%" + "\n"
 	}
-	html = html + "</tbody></table></div></div></td></tr></tbody></table></div>"
 	return html, nil
 }
